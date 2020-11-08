@@ -1,1 +1,1 @@
-export { submitResponse, default } from './quizSlice';
+export { submitResponse, fetchQuiz, default } from './quizSlice';
