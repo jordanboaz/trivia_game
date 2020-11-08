@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { Text, View } from 'react-native';
 import { useTypedSelector } from '../../store/useTypedSelector';
 import { fetchQuiz, submitResponse } from '../../store/quiz';
+import { Screen } from '../../components';
 // import { Container } from './styles';
 
 const Home: React.FC = () => {
@@ -12,12 +13,12 @@ const Home: React.FC = () => {
   console.log('quiz', quiz);
   return (
 
-    <View>
+    <Screen safe>
       <Text>Hello world</Text>
       <Text onPress={() => dispatch(submitResponse({ response: 'True' }))}>True</Text>
       <Text onPress={() => dispatch(submitResponse({ response: 'False' }))}>False</Text>
       <Text onPress={() => dispatch(fetchQuiz({ amount: 3 }))}>GET!</Text>
-    </View>
+    </Screen>
   );
 };
 
