@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../store/useTypedSelector';
-import { submitResponse } from '../../store/quiz';
+import { fetchQuiz, submitResponse } from '../../store/quiz';
 // import { Container } from './styles';
 
 const Home: React.FC = () => {
@@ -16,6 +16,7 @@ const Home: React.FC = () => {
       <Text>Hello world</Text>
       <Text onPress={() => dispatch(submitResponse({ response: 'True' }))}>True</Text>
       <Text onPress={() => dispatch(submitResponse({ response: 'False' }))}>False</Text>
+      <Text onPress={() => dispatch(fetchQuiz({ amount: 3 }))}>GET!</Text>
     </View>
   );
 };

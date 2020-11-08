@@ -1,11 +1,13 @@
 import { Question } from '../../types/Question';
 
 export interface QuizState {
+
   questionList: Question[],
   current: number;
   correct: number[],
   incorrect: number[];
   status: 'unstarted' | 'started' | 'finished';
+  loading: boolean;
 }
 
 export interface SubmitResponse {

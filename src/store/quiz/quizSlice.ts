@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { QuizState, SubmitResponse } from './types';
+import { getQuestions, Request as QuizRequest } from '../../services/quizService';
 
 const INITIAL_STATE: QuizState = {
   questionList: [],
@@ -7,7 +8,13 @@ const INITIAL_STATE: QuizState = {
   incorrect: [],
   current: 0,
   status: 'unstarted',
+  loading: false,
 };
+
+export const fetchQuiz = createAsyncThunk('quiz/fetch', async (params: QuizRequest) => {
+  const quiz = getQuestions(params);
+  return quiz;
+});
 
 const quizSlice = createSlice({
   name: 'quiz',
@@ -32,9 +39,18 @@ const quizSlice = createSlice({
         state.status = 'finished';
       }
     },
-    finishQuiz(state, action) {
+    finishQuiz(state) {
       state.status = 'finished';
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchQuiz.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchQuiz.fulfilled, (state, action) => {
+      state.loading = false;
+      state.questionList = [...action.payload];
+    });
   },
 });
 

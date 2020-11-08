@@ -3,7 +3,7 @@ import api from './api';
 import { QuizResponse } from '../types/QuizResponse';
 import { Question } from '../types/Question';
 
-interface Request {
+export interface Request {
   amount?: number;
   difficulty?: string;
   type?: string
@@ -25,13 +25,6 @@ const doRequest = async (url: string, customParams = {}): Promise<Question[]> =>
     throw error.message;
   }
 };
-
-// const doRequest = (url: string, customParams = {}): Promise<Question[]> => new Promise((resolve, reject) => api.get(url, { params: customParams })
-//   .then((response) => {
-//     const res = cleanResult(response.data);
-//     resolve(res);
-//   })
-//   .catch((err) => reject(err.message)));
 
 const cleanResult = (result: QuizResponse) => result.results;
 
