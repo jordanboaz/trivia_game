@@ -1,5 +1,6 @@
 export interface Props {
   questionNumber: number;
   correctAnswers: number;
-  totalNumberOfQuestion: number
+  totalNumberOfQuestion: number;
+  category: string;
 }

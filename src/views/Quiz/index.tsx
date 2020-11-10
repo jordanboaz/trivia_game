@@ -1,14 +1,24 @@
 import React, { useEffect, useRef } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { HeaderBackButton, StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
-import { Text, FlatList } from 'react-native';
+
 import { useTypedSelector } from '../../store/useTypedSelector';
-import { fetchQuiz, submitResponse } from '../../store/quiz';
+import { fetchQuiz, submitResponse, cleanQuiz } from '../../store/quiz';
 import {
-  Screen, QuizBox, QuizCounter, SocialShare,
+  Screen,
+  QuizBox,
+  QuizCounter,
+  SocialShare,
+  Loader,
 } from '../../components';
 import {
-  Content, SocialShareContainer, QuizContainer, QuizCounterContainer,
+  Content,
+  SocialShareContainer,
+  QuizContainer,
+  QuizCounterContainer,
+  LoaderContainer,
 } from './styles';
 
 const Home: React.FC = () => {
@@ -19,11 +29,13 @@ const Home: React.FC = () => {
   const quizStatus = useTypedSelector((state) => state.quiz.status);
   const correctAnswers = useTypedSelector((state) => state.quiz.correct);
   const incorrectAnswers = useTypedSelector((state) => state.quiz.incorrect);
+  const loading = useTypedSelector((state) => state.quiz.loading);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchQuiz({ amount: 3 }));
+    rewriteBackButton();
   }, []);
 
   useEffect(() => {
@@ -32,11 +44,28 @@ const Home: React.FC = () => {
     }
   }, [quizStatus]);
 
+  const rewriteBackButton = () => {
+    navigation.setOptions({
+      headerLeft:
+        (props: StackHeaderLeftButtonProps) => (
+          <HeaderBackButton
+            {...props}
+            onPress={customGoBack}
+          />
+        ),
+    });
+  };
+
+  const customGoBack = () => {
+    dispatch(cleanQuiz());
+    navigation.goBack();
+  };
+
   const navigateToResultsScreen = () => {
     navigation.navigate('Results');
   };
 
-  console.log('\n\n\quiz', quiz);
+  console.log('\n\nquiz', quiz);
   console.log('incorrectAnswers', incorrectAnswers);
   console.log('current', currentQuestion);
 
@@ -57,6 +86,17 @@ const Home: React.FC = () => {
   const scrollToNextQuestion = () => {
     quizScrollRef?.current?.scrollToIndex({ index: currentQuestion });
   };
+
+  if (loading) {
+    return (
+      <Screen safe>
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      </Screen>
+    );
+  }
+
   return (
 
     <Screen safe>
@@ -66,6 +106,7 @@ const Home: React.FC = () => {
             questionNumber={currentQuestion + 1}
             totalNumberOfQuestion={quiz.questionList.length}
             correctAnswers={correctAnswers.length}
+            category={quiz?.questionList[currentQuestion]?.category || ''}
           />
         </QuizCounterContainer>
         <QuizContainer>
