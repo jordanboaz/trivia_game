@@ -5,10 +5,10 @@ import { Text, FlatList } from 'react-native';
 import { useTypedSelector } from '../../store/useTypedSelector';
 import { fetchQuiz, submitResponse } from '../../store/quiz';
 import {
-  Screen, QuizBox, QuizCounter,
+  Screen, QuizBox, QuizCounter, SocialShare,
 } from '../../components';
 import {
-  Content, SocialShare, SocialShareContainer, QuizContainer, QuizCounterContainer,
+  Content, SocialShareContainer, QuizContainer, QuizCounterContainer,
 } from './styles';
 
 const Home: React.FC = () => {
