@@ -40,7 +40,7 @@ const QuizBox: React.FC<Props> = ({
 
     return allAnswers.sort(sortAlphabetically);
   };
-
+  // TODO IMAGEES SPLASH
   return (
     <Container>
       <PhotoContainer>
