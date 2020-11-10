@@ -1,6 +1,6 @@
 // https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean
 import api from './api';
-import { QuizResponse } from '../types/QuizResponse';
+import { QuestionResponse, QuizResponse } from '../types/QuizResponse';
 import { Question } from '../types/Question';
 
 export interface Request {
@@ -26,6 +26,16 @@ const doRequest = async (url: string, customParams = {}): Promise<Question[]> =>
   }
 };
 
-const cleanResult = (result: QuizResponse) => result.results;
+const cleanResult = (result: QuizResponse) => result.results.map((question): Question => {
+  const parsedQuestion: Question = {
+    category: question.category,
+    correctAnswer: question.correct_answer,
+    difficulty: question.difficulty,
+    incorrectAnswers: question.incorrect_answers,
+    question: question.question,
+    type: question.type,
+  };
+  return parsedQuestion;
+});
 
 export { getQuestions };

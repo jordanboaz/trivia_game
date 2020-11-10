@@ -21,16 +21,26 @@ const quizSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     submitResponse(state, action: SubmitResponse) {
-      const { response } = action.payload;
+      const { questionNumber, response } = action.payload;
       const { questionList } = state;
-      const currentQuestionNumber = state.current;
-      const currentQuestion = questionList[currentQuestionNumber];
+      // const currentQuestionNumber = state.current;
+      const currentQuestion = questionList[questionNumber];
 
       if (currentQuestion.correctAnswer === response) {
-        state.correct.push(currentQuestionNumber);
+        state.correct.push(questionNumber);
       } else {
-        state.incorrect.push(currentQuestionNumber);
+        state.incorrect.push(questionNumber);
       }
+      if (questionNumber + 1 < questionList.length) {
+        state.current = questionNumber + 1;
+        state.status = 'started';
+      } else {
+        state.status = 'finished';
+      }
+    },
+    advanceQuiz(state) {
+      const { questionList } = state;
+      const currentQuestionNumber = state.current;
 
       if (currentQuestionNumber + 1 < questionList.length) {
         state.current = currentQuestionNumber + 1;
@@ -54,6 +64,6 @@ const quizSlice = createSlice({
   },
 });
 
-export const { submitResponse } = quizSlice.actions;
+export const { submitResponse, advanceQuiz } = quizSlice.actions;
 
 export default quizSlice.reducer;

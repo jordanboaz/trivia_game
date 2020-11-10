@@ -13,6 +13,7 @@ export interface QuizState {
 export interface SubmitResponse {
   type: string;
   payload: {
+    questionNumber: number;
     response: string;
   }
 }
