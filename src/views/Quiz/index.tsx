@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { Text, View, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import { useTypedSelector } from '../../store/useTypedSelector';
-import { fetchQuiz, submitResponse, advanceQuiz } from '../../store/quiz';
+import { fetchQuiz, submitResponse } from '../../store/quiz';
 import {
-  Screen, QuizBox, QuizList, QuizCounter,
+  Screen, QuizBox, QuizCounter,
 } from '../../components';
-import { Question } from '../../types/Question';
-import { Content, SocialShare } from './styles';
+import {
+  Content, SocialShare, SocialShareContainer, QuizContainer, QuizCounterContainer,
+} from './styles';
 
 const Home: React.FC = () => {
   const quizScrollRef = useRef();
@@ -60,16 +61,15 @@ const Home: React.FC = () => {
 
     <Screen safe>
       <Content>
-        <View style={{ flex: 0.2, paddingHorizontal: 16 }}>
+        <QuizCounterContainer>
           <QuizCounter
             questionNumber={currentQuestion + 1}
             totalNumberOfQuestion={quiz.questionList.length}
             correctAnswers={correctAnswers.length}
           />
-        </View>
-        <View style={{ flex: 1 }}>
+        </QuizCounterContainer>
+        <QuizContainer>
           <FlatList
-            // style={{ backgroundColor: 'red' }}
             contentContainerStyle={{ alignItems: 'center' }}
             ref={quizScrollRef}
             data={quiz.questionList}
@@ -87,21 +87,16 @@ const Home: React.FC = () => {
                 incorrectAnswers={item.incorrectAnswers}
                 difficulty={item.difficulty}
                 onPress={onSelectAnswer}
-                onFeedbackEnd={() => {
-                  console.log('Feedback ended. Go next');
-                  scrollToNextQuestion();
-                }}
+                onFeedbackEnd={scrollToNextQuestion}
                 type={item.type}
               />
             )}
           />
-        </View>
-        <View style={{ flex: 0.2 }}>
+        </QuizContainer>
+        <SocialShareContainer>
 
-          <SocialShare>
-            <Text>Social Share</Text>
-          </SocialShare>
-        </View>
+          <SocialShare />
+        </SocialShareContainer>
       </Content>
     </Screen>
   );
