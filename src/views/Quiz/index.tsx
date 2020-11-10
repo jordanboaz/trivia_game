@@ -126,6 +126,7 @@ const Home: React.FC = () => {
             data={quiz.questionList}
             loading={quiz.loading}
             horizontal
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.question}
             renderItem={({ item, index }) => (
