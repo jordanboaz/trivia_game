@@ -8,6 +8,12 @@ export const Content = styled.View`
     padding-top: 16px;
 `;
 
+export const LoaderContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const QuizCounterContainer = styled.View`
   flex: 0.2;
   padding: 0 16px;

@@ -1,18 +1,30 @@
 import React from 'react';
 import { Props } from './types';
 import {
-  Container, QuestionNumber, ScoreContainer, ScoreTitle, ScoreValue,
+  Container,
+  QuestionNumber,
+  ScoreContainer,
+  ScoreTitle,
+  ScoreValue,
+  QuestionInfoContainer,
+  QuestionCategory,
 } from './styles';
 
 const QuizCounter: React.FC<Props> = ({
   questionNumber,
   correctAnswers,
   totalNumberOfQuestion,
+  category,
 }: Props) => (
     <Container>
-      <QuestionNumber>
-        {`Question ${questionNumber}`}
-      </QuestionNumber>
+      <QuestionInfoContainer>
+        <QuestionNumber>
+          {`Question ${questionNumber}`}
+        </QuestionNumber>
+        <QuestionCategory>
+          {`${category}`}
+        </QuestionCategory>
+      </QuestionInfoContainer>
 
       <ScoreContainer>
         <ScoreTitle>Your score</ScoreTitle>

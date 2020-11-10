@@ -6,7 +6,7 @@ export const Container = styled.View`
   width: 100%;
   flex-direction: row;
 
-  padding: 16px;
+  padding: 10px 16px;
   border-radius: 4px;
   justify-content: space-between;
 `;
@@ -14,29 +14,39 @@ export const Container = styled.View`
 export const QuestionNumber = styled.Text`
 flex: 1;
 font-size: 18px;
-color: rgba(15, 41, 189, 0.75);
+color: #3462e0;
+margin-bottom: 3px;
 `;
 
 export const ScoreContainer = styled.View`
-  flex: 1;
+  flex: 0.4;
   justify-content: flex-start;
 
-  /* align-items: center; */
 `;
 
 export const ScoreTitle = styled.Text`
-font-size: 16px;
-text-align: right;
-color: rgba(15, 41, 189, 0.75);
-
-
+  font-size: 16px;
+  text-align: right;
+  color: #3462e0;
 
 `;
 
 export const ScoreValue = styled.Text`
-font-size: 20px;
-text-align: right;
-color: rgba(15, 41, 189, 0.75);
+  font-size: 20px;
+  text-align: right;
+  color: #3462e0;
+`;
 
+export const QuestionInfoContainer = styled.View`
+  flex: 1;
+  flex-wrap: wrap;
+  overflow: hidden;
+`;
 
+export const QuestionCategory = styled.Text.attrs({
+  numberOfLines: 1,
+})`
+
+  color: #666666;
+  flex-wrap: wrap;
 `;
