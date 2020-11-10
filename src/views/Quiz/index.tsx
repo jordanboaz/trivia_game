@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HeaderBackButton, StackHeaderLeftButtonProps } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
+import { getRandomPhotos } from '../../services/unsplashService';
 
 import { useTypedSelector } from '../../store/useTypedSelector';
 import { fetchQuiz, submitResponse, cleanQuiz } from '../../store/quiz';
@@ -21,8 +22,11 @@ import {
   LoaderContainer,
 } from './styles';
 
+const amount = 10;
+
 const Home: React.FC = () => {
   const quizScrollRef = useRef();
+  const [photos, setPhotos] = useState([]);
   const navigation = useNavigation();
   const quiz = useTypedSelector((state) => state.quiz);
   const currentQuestion = useTypedSelector((state) => state.quiz.current);
@@ -34,7 +38,8 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchQuiz({ amount: 3 }));
+    dispatch(fetchQuiz({ amount }));
+    getUnsplashPhotos();
     rewriteBackButton();
   }, []);
 
@@ -43,6 +48,11 @@ const Home: React.FC = () => {
       navigateToResultsScreen();
     }
   }, [quizStatus]);
+
+  const getUnsplashPhotos = async () => {
+    const res = await getRandomPhotos({ count: amount });
+    setPhotos(res);
+  };
 
   const rewriteBackButton = () => {
     navigation.setOptions({
@@ -65,9 +75,9 @@ const Home: React.FC = () => {
     navigation.navigate('Results');
   };
 
-  console.log('\n\nquiz', quiz);
-  console.log('incorrectAnswers', incorrectAnswers);
-  console.log('current', currentQuestion);
+  // console.log('\n\nquiz', quiz);
+  // console.log('incorrectAnswers', incorrectAnswers);
+  // console.log('current', currentQuestion);
 
   const onSelectAnswer = (questionNumber: number, response: string) => {
     dispatch(submitResponse({ questionNumber, response }));
@@ -129,6 +139,7 @@ const Home: React.FC = () => {
                 difficulty={item.difficulty}
                 onPress={onSelectAnswer}
                 onFeedbackEnd={scrollToNextQuestion}
+                images={photos}
                 type={item.type}
               />
             )}
