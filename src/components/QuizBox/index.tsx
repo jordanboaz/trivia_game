@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { sortAlphabetically } from '../../utils';
 import { Props } from './types';
+import { IMG_PLACEHOLDER } from '../../values/config';
 import {
   Container,
   QuestionContainer,
@@ -20,6 +21,7 @@ const QuizBox: React.FC<Props> = ({
   incorrectAnswers,
   onPress,
   onFeedbackEnd,
+  images,
 }: Props) => {
   const [selectedAnswer, setSelectedAnswer] = useState(-1);
 
@@ -40,11 +42,11 @@ const QuizBox: React.FC<Props> = ({
 
     return allAnswers.sort(sortAlphabetically);
   };
-  // TODO IMAGEES SPLASH
+
   return (
     <Container>
       <PhotoContainer>
-        <Photo source={require('../../assets/image.png')} />
+        <Photo source={{ uri: images[questionIndex] || IMG_PLACEHOLDER }} />
       </PhotoContainer>
       <QuestionContainer>
         <Question>{question}</Question>

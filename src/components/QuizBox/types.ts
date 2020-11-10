@@ -5,4 +5,5 @@ export interface Props extends Question {
   questionStatus: 'unaswered' | 'success' | 'failure'
   onPress: any;
   onFeedbackEnd: any;
+  images?: string[];
 }
