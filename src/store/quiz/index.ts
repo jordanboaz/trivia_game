@@ -1,3 +1,3 @@
 export {
-  submitResponse, fetchQuiz, advanceQuiz, default,
+  cleanQuiz, submitResponse, fetchQuiz, advanceQuiz, default,
 } from './quizSlice';
