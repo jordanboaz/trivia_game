@@ -38,6 +38,9 @@ const quizSlice = createSlice({
         state.status = 'finished';
       }
     },
+    cleanQuiz() {
+      return INITIAL_STATE;
+    },
     advanceQuiz(state) {
       const { questionList } = state;
       const currentQuestionNumber = state.current;
@@ -64,6 +67,6 @@ const quizSlice = createSlice({
   },
 });
 
-export const { submitResponse, advanceQuiz } = quizSlice.actions;
+export const { submitResponse, advanceQuiz, cleanQuiz } = quizSlice.actions;
 
 export default quizSlice.reducer;
