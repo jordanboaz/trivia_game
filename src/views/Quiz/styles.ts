@@ -20,7 +20,3 @@ export const QuizContainer = styled.View`
 export const SocialShareContainer = styled.View`
   flex: 0.2;
 `;
-
-export const SocialShare = styled.View`
-  flex: 1
-`;

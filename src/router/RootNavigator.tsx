@@ -21,7 +21,7 @@ const RootNavigator: FunctionComponent = () => (
       >
 
         <Stack.Screen name="Quiz" component={Quiz} />
-        <Stack.Screen name="Results" component={Results} />
+        <Stack.Screen name="Results" component={Results} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   </>
